@@ -10,12 +10,12 @@ window.RESTAURANT = {
 
   // ---- WhatsApp ordering --------------------------------------------------
   // Country code + number, digits only (no "+", spaces or dashes).
-  // UAE example: +971 54 320 5664  ->  "971543205664"
-  whatsappNumber: "971543205664",
+  // UAE example: +971 58 883 5200  ->  "971588835200"
+  whatsappNumber: "971588835200",
 
   // ---- Contact details shown on the site ---------------------------------
-  phoneDisplay: "+971 54 320 5664",
-  phoneTel: "+971543205664",        // used for the "Call" button
+  phoneDisplay: "+971 58 883 5200",
+  phoneTel: "+971588835200",        // used for the "Call" button
   email: "",                        // optional, leave "" to hide
   address: "United Arab Emirates",  // EDIT: add your full street address
   mapsLink: "",                     // EDIT: paste your Google Maps link to show a "Get directions" button

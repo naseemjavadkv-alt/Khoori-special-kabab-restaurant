@@ -31,8 +31,8 @@ so location sharing works for customers.
 | Photos on the home-page hero | the three `<img>` tags in `index.html` (class `plate`) |
 
 ### WhatsApp number
-In `js/config.js`: `whatsappNumber: "971543205664"` – country code + number,
-digits only (no `+`, spaces or dashes). Currently set to +971 54 320 5664.
+In `js/config.js`: `whatsappNumber: "971588835200"` – country code + number,
+digits only (no `+`, spaces or dashes). Currently set to +971 58 883 5200.
 
 ### Opening hours
 `hours: { open: "09:00", close: "07:00" }` – when `close` is earlier than `open`
