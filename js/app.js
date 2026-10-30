@@ -644,8 +644,11 @@
   function renderStatus() {
     const s = openStatus();
     const pill = $('#status-pill');
-    pill.dataset.open = s.open ? 'yes' : 'no';
-    $('span', pill).textContent = s.text;
+    if (pill) {
+      pill.dataset.open = s.open ? 'yes' : 'no';
+      const span = $('span', pill);
+      if (span) span.textContent = s.text;
+    }
     const c = $('#contact-status');
     if (c) c.textContent = s.text;
   }
