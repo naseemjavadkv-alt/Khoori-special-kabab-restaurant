@@ -477,21 +477,27 @@
       if (!('geolocation' in navigator)) return say('Your browser can’t share location. Paste a Google Maps link instead.', 'bad');
       if (window.isSecureContext === false) return say('Location sharing needs a secure (https) page. Paste a Google Maps link instead.', 'bad');
       locBtn.disabled = true; say('Waiting for your permission and location…');
-      navigator.geolocation.getCurrentPosition(pos => {
-        const { latitude, longitude, accuracy } = pos.coords;
-        loc.value = `https://www.google.com/maps?q=${latitude.toFixed(6)},${longitude.toFixed(6)}`;
-        setError(loc, '');
-        say(`Location added (accurate to about ${Math.round(accuracy)} m). You can still edit the link.`, 'ok');
-        locBtn.disabled = false;
-      }, err => {
-        locBtn.disabled = false;
-        const msgs = {
-          1: 'Location permission was denied. Allow it in your browser settings, or paste a Google Maps link.',
-          2: 'Couldn’t work out your location. Move to an open area, or paste a Google Maps link.',
-          3: 'Finding your location took too long. Try again, or paste a Google Maps link.'
-        };
-        say(msgs[err.code] || msgs[2], 'bad');
-      }, { enableHighAccuracy: true, timeout: 12000, maximumAge: 60000 });
+      function getPos(highAccuracy) {
+        navigator.geolocation.getCurrentPosition(pos => {
+          const { latitude, longitude, accuracy } = pos.coords;
+          loc.value = `https://www.google.com/maps?q=${latitude.toFixed(6)},${longitude.toFixed(6)}`;
+          setError(loc, '');
+          say(`Location added (accurate to about ${Math.round(accuracy)} m). You can still edit the link.`, 'ok');
+          locBtn.disabled = false;
+        }, err => {
+          if (highAccuracy && (err.code === 2 || err.code === 3)) {
+            return getPos(false);
+          }
+          locBtn.disabled = false;
+          const msgs = {
+            1: 'Location permission was denied. Allow it in your browser settings, or paste a Google Maps link.',
+            2: 'Couldn’t work out your location. Move to an open area, or paste a Google Maps link.',
+            3: 'Finding your location took too long. Try again, or paste a Google Maps link.'
+          };
+          say(msgs[err.code] || msgs[2], 'bad');
+        }, { enableHighAccuracy: highAccuracy, timeout: highAccuracy ? 8000 : 15000, maximumAge: 60000 });
+      }
+      getPos(true);
     });
 
     const status = openStatus();
